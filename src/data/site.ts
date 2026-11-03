@@ -54,9 +54,13 @@ export const facts = [
   { label: "Para", value: "Todos los niveles" },
 ];
 
-// TODO: completar con los links reales
+const whatsappMessage = "Hola Agus! Quiero reservar una clase de yoga 🧘";
+
 export const contact = [
-  { label: "WhatsApp", href: "#", primary: true },
-  { label: "Instagram", href: "#" },
-  { label: "Email", href: "#" },
+  {
+    label: "WhatsApp",
+    href: `https://wa.me/5492915249141?text=${encodeURIComponent(whatsappMessage)}`,
+    primary: true,
+  },
+  { label: "Instagram", href: "https://www.instagram.com/msagusguerrero/" },
 ];
