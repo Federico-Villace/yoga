@@ -59,6 +59,17 @@ a { color: inherit; text-decoration: none; }
 em { font-style: italic; }
 strong { font-weight: 500; }
 
+/* Visible solo para lectores de pantalla y buscadores */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ---------- Tipografía compartida ---------- */
 
 .eyebrow {
@@ -114,7 +125,7 @@ strong { font-weight: 500; }
 .btn--ghost:hover { border-color: var(--ink); }
 
 /* ---------- Luz filtrada por cortinas ---------- */
-/* Franjas verticales suaves que "respiran". Usada en Hero y Band. */
+/* Franjas verticales suaves que "respiran". Usada en el Hero. */
 
 .curtain-light {
   position: absolute;

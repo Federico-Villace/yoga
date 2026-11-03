@@ -5,37 +5,27 @@ import { site } from "../data/site";
 <section class="hero" id="inicio">
   <div class="curtain-light" aria-hidden="true"></div>
 
-  <div class="hero__content">
-    <p class="eyebrow reveal">Hatha Yoga · {site.location}</p>
-    <h1 class="hero__title reveal">
-      Respirar.<br />
-      Habitar el cuerpo.<br />
-      <em>Volver.</em>
-    </h1>
-    <p class="hero__lead reveal">
-      Un espacio para bajar el ritmo, moverte con conciencia y reencontrarte con tu respiración.
-    </p>
-    <div class="hero__actions reveal">
-      <a href="#contacto" class="btn btn--solid">Reservá tu clase</a>
-      <a href="#clases" class="btn btn--ghost">Ver clases</a>
-    </div>
-  </div>
+  <!-- El h1 existe para buscadores y lectores de pantalla; visualmente habla el ensō -->
+  <h1 class="sr-only">{site.name} · Hatha Yoga en {site.location}</h1>
 
   <!-- Ensō: el círculo zen dibujado en un solo trazo -->
-  <div class="hero__enso" aria-hidden="true">
-    <svg viewBox="0 0 200 200" class="enso">
-      <defs>
-        <filter id="brush">
-          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
-        </filter>
-      </defs>
-      <path
-        class="enso__stroke"
-        filter="url(#brush)"
-        d="M 128 32 C 170 48 184 96 168 134 C 150 176 96 186 60 164 C 26 142 20 92 44 60 C 62 36 92 26 116 30"
-      />
-    </svg>
+  <svg viewBox="0 0 200 200" class="enso" aria-hidden="true">
+    <defs>
+      <filter id="brush">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+      </filter>
+    </defs>
+    <path
+      class="enso__stroke"
+      filter="url(#brush)"
+      d="M 128 32 C 170 48 184 96 168 134 C 150 176 96 186 60 164 C 26 142 20 92 44 60 C 62 36 92 26 116 30"
+    />
+  </svg>
+
+  <div class="hero__actions">
+    <a href="#contacto" class="btn btn--solid">Reservá tu clase</a>
+    <a href="#clases" class="btn btn--ghost">Ver clases</a>
   </div>
 
   <p class="vertical vertical--hero" aria-hidden="true">静けさの中で</p>
@@ -48,43 +38,23 @@ import { site } from "../data/site";
     position: relative;
     min-height: 100vh;
     min-height: 100svh;
-    display: grid;
-    grid-template-columns: 1.1fr .9fr;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    padding: 8rem var(--gutter) 6rem;
+    justify-content: center;
+    gap: clamp(2.5rem, 6vh, 4rem);
+    padding: 7rem var(--gutter) 6rem;
     overflow: hidden;
     background: linear-gradient(180deg, var(--washi) 0%, var(--linen) 100%);
   }
 
-  .hero__content { position: relative; z-index: 2; max-width: 38rem; }
-
-  .hero__title {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(2.6rem, 1.6rem + 4.5vw, 5.5rem);
-    line-height: 1.12;
-    letter-spacing: -.005em;
-    margin-bottom: 2rem;
-  }
-  .hero__title em { color: var(--oak); }
-
-  .hero__lead {
-    max-width: 28rem;
-    color: var(--stone);
-    margin-bottom: 3rem;
-  }
-
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
-
-  .hero__enso {
+  .enso {
     position: relative;
     z-index: 1;
-    display: flex;
-    justify-content: center;
+    width: min(48vh, 72vw, 440px);
+    height: auto;
+    overflow: visible;
   }
-
-  .enso { width: min(100%, 440px); height: auto; overflow: visible; }
 
   .enso__stroke {
     fill: none;
@@ -98,6 +68,22 @@ import { site } from "../data/site";
   }
 
   @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  /* Los botones aparecen cuando el trazo está por cerrarse */
+  .hero__actions {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    animation: rise 1.4s var(--ease) 2.8s both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
 
   .vertical--hero {
     position: absolute;
@@ -129,10 +115,8 @@ import { site } from "../data/site";
     100% { transform: translateY(100%); }
   }
 
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 7rem; }
-    .hero__enso { position: absolute; right: -20%; top: 12%; width: 75%; opacity: .18; }
-    .vertical--hero { display: none; }
+  @media (max-width: 720px) {
+    .vertical--hero { right: .75rem; font-size: .8rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
