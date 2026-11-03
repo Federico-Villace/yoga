@@ -11,13 +11,19 @@ import { schedule } from "../data/site";
   <ul class="timetable reveal">
     {schedule.map((s) => (
       <li>
-        <span class="day">{s.day}</span>
-        <span class="dots"></span>
-        <span class="time">{s.time} — {s.name}</span>
+        <div class="row">
+          <span class="day">{s.day}</span>
+          <span class="dots"></span>
+          <span class="time">{s.start} — {s.end}</span>
+        </div>
+        <p class="detail">
+          {s.name} · en{" "}
+          <a href={s.venue.href} target="_blank" rel="noopener noreferrer">{s.venue.name}</a>
+        </p>
       </li>
     ))}
   </ul>
-  <p class="schedule__note reveal">Clases privadas: horario a coordinar.</p>
+  <p class="schedule__note reveal">Clases privadas y en domicilio: horario a coordinar.</p>
 </section>
 
 <style>
@@ -29,17 +35,29 @@ import { schedule } from "../data/site";
 
   .timetable { list-style: none; }
   .timetable li {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 1.4rem 0;
+    padding: 1.6rem 0;
     border-bottom: 1px solid var(--sand);
   }
   .timetable li:first-child { border-top: 1px solid var(--sand); }
 
-  .day { font-family: var(--serif); font-size: 1.2rem; min-width: 7rem; }
+  .row { display: flex; align-items: baseline; gap: 1rem; }
+
+  .day { font-family: var(--serif); font-size: 1.3rem; min-width: 7rem; }
   .dots { flex: 1; border-bottom: 1px dotted var(--sand); transform: translateY(-.3rem); }
-  .time { color: var(--stone); text-align: right; }
+  .time { font-family: var(--serif); font-size: 1.2rem; letter-spacing: .04em; }
+
+  .detail {
+    margin-top: .35rem;
+    font-size: .85rem;
+    letter-spacing: .08em;
+    color: var(--stone);
+  }
+  .detail a {
+    color: var(--oak);
+    border-bottom: 1px solid transparent;
+    transition: border-color .4s var(--ease);
+  }
+  .detail a:hover { border-color: var(--oak); }
 
   .schedule__note {
     margin-top: 2rem;
@@ -50,9 +68,8 @@ import { schedule } from "../data/site";
   }
 
   @media (max-width: 720px) {
-    .timetable li { flex-wrap: wrap; gap: .25rem; }
+    .row { flex-wrap: wrap; gap: .25rem; }
     .dots { display: none; }
     .day { min-width: 0; width: 100%; }
-    .time { text-align: left; }
   }
 </style>

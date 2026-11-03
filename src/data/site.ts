@@ -4,7 +4,7 @@
 export const site = {
   name: "Agustina Guerrero",
   tagline: "hatha yoga",
-  location: "Buenos Aires",
+  location: "San Telmo, Buenos Aires",
   description:
     "Clases de Hatha Yoga con Agustina Guerrero. Respiración, presencia y movimiento consciente.",
 };
@@ -36,12 +36,16 @@ export const classes = [
   },
 ];
 
+export const venues = {
+  stretchClub: {
+    name: "@stretchclub.ar",
+    href: "https://www.instagram.com/stretchclub.ar/",
+  },
+};
+
 export const schedule = [
-  { day: "Lunes", time: "08:00", name: "Hatha grupal" },
-  { day: "Martes", time: "19:00", name: "Pranayama & meditación" },
-  { day: "Miércoles", time: "08:00", name: "Hatha grupal" },
-  { day: "Jueves", time: "19:00", name: "Hatha grupal" },
-  { day: "Sábado", time: "10:00", name: "Hatha grupal" },
+  { day: "Miércoles", start: "19:30", end: "20:30", name: "Hatha grupal", venue: venues.stretchClub },
+  { day: "Viernes", start: "18:45", end: "19:45", name: "Hatha grupal", venue: venues.stretchClub },
 ];
 
 export const facts = [
