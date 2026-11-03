@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.name} · Hatha Yoga`,
+  description = site.description,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Revelado suave al entrar en pantalla
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+      );
+
+      document.querySelectorAll<HTMLElement>(".reveal").forEach((el, i) => {
+        // Escalonado leve entre elementos hermanos
+        el.style.transitionDelay = `${(i % 4) * 90}ms`;
+        // Una vez revelado, sacamos el delay para que los hovers respondan al instante
+        el.addEventListener("transitionend", () => (el.style.transitionDelay = ""), { once: true });
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import { contact } from "../data/site";
+---
+
+<section class="contact" id="contacto">
+  <p class="vertical vertical--contact" aria-hidden="true">ようこそ</p>
+  <div class="contact__inner">
+    <p class="eyebrow reveal">Contacto</p>
+    <h2 class="section-title reveal">Tu lugar en la esterilla<br />te está esperando.</h2>
+    <p class="contact__lead reveal">
+      Escribime para reservar una clase, consultar disponibilidad o simplemente preguntar.
+    </p>
+    <div class="contact__links reveal">
+      {contact.map((c) => (
+        <a href={c.href} class:list={["btn", c.primary ? "btn--solid" : "btn--ghost"]}>{c.label}</a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    background: var(--ink);
+    color: var(--washi);
+    padding: var(--section) var(--gutter);
+    text-align: center;
+    overflow: hidden;
+  }
+  .contact__inner { max-width: 40rem; margin: 0 auto; }
+  .contact .eyebrow { color: var(--sand); }
+  .contact__lead { color: rgba(245, 240, 232, .7); margin-bottom: 3rem; }
+
+  .contact__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  .contact .btn--solid { background: var(--washi); color: var(--ink); border-color: var(--washi); }
+  .contact .btn--solid:hover { background: var(--oak); border-color: var(--oak); color: var(--washi); }
+  .contact .btn--ghost { color: var(--washi); border-color: rgba(245, 240, 232, .3); }
+  .contact .btn--ghost:hover { border-color: var(--washi); }
+
+  .vertical--contact {
+    position: absolute;
+    left: var(--gutter);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sand);
+    opacity: .35;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 900px) {
+    .vertical--contact { display: none; }
+  }
+</style>

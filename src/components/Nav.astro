@@ -1,0 +1,130 @@
+---
+import { site, nav } from "../data/site";
+---
+
+<header class="nav" id="nav">
+  <a href="#inicio" class="nav__brand">
+    <span class="nav__name">{site.name}</span>
+    <span class="nav__tag">{site.tagline}</span>
+  </a>
+  <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+  <nav class="nav__links" id="navLinks">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a href="#contacto" class="nav__cta">Reservar</a>
+  </nav>
+</header>
+
+<script>
+  const nav = document.getElementById("nav")!;
+  const toggle = document.getElementById("navToggle")!;
+  const links = document.getElementById("navLinks")!;
+
+  // Fondo al scrollear
+  const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Menú mobile
+  const setMenu = (open: boolean) => {
+    links.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    document.body.style.overflow = open ? "hidden" : "";
+  };
+
+  toggle.addEventListener("click", () => setMenu(!links.classList.contains("is-open")));
+  links.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem var(--gutter);
+    transition: background-color .6s var(--ease), padding .6s var(--ease), box-shadow .6s var(--ease);
+  }
+
+  .nav.is-scrolled {
+    background: rgba(245, 240, 232, .88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-shadow: 0 1px 0 rgba(46, 42, 37, .06);
+  }
+
+  .nav__brand { display: flex; flex-direction: column; line-height: 1.2; }
+  .nav__name { font-family: var(--serif); font-size: 1.15rem; letter-spacing: .04em; }
+  .nav__tag { font-size: .65rem; letter-spacing: .35em; text-transform: uppercase; color: var(--stone); }
+
+  .nav__links { display: flex; align-items: center; gap: 2.5rem; }
+  .nav__links a {
+    position: relative;
+    font-size: .78rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+  .nav__links a:not(.nav__cta)::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 100%; height: 1px;
+    background: var(--oak);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .5s var(--ease);
+  }
+  .nav__links a:not(.nav__cta):hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .nav__cta {
+    padding: .6rem 1.4rem;
+    border: 1px solid var(--ink);
+    transition: background-color .4s var(--ease), color .4s var(--ease);
+  }
+  .nav__cta:hover { background: var(--ink); color: var(--washi); }
+
+  .nav__toggle {
+    display: none;
+    width: 32px; height: 32px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+    z-index: 60;
+  }
+  .nav__toggle span {
+    position: absolute;
+    left: 4px; right: 4px;
+    height: 1px;
+    background: var(--ink);
+    transition: transform .4s var(--ease), top .4s var(--ease);
+  }
+  .nav__toggle span:first-child { top: 12px; }
+  .nav__toggle span:last-child { top: 20px; }
+  .nav__toggle[aria-expanded="true"] span:first-child { top: 16px; transform: rotate(45deg); }
+  .nav__toggle[aria-expanded="true"] span:last-child { top: 16px; transform: rotate(-45deg); }
+
+  @media (max-width: 720px) {
+    .nav__toggle { display: block; }
+
+    .nav__links {
+      position: fixed;
+      inset: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.5rem;
+      background: var(--washi);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .5s var(--ease), visibility .5s;
+    }
+    .nav__links.is-open { opacity: 1; visibility: visible; }
+    .nav__links a { font-size: .95rem; }
+  }
+</style>

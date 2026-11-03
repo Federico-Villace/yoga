@@ -1,0 +1,156 @@
+/* ==========================================================
+   Agustina Guerrero · Hatha Yoga
+   Estética: japandi — lino, roble claro, luz filtrada, aire.
+   Acá van solo tokens y utilidades compartidas.
+   Los estilos de cada sección viven en su componente.
+   ========================================================== */
+
+:root {
+  /* Paleta */
+  --washi:   #f5f0e8;   /* papel de arroz — fondo principal */
+  --linen:   #ebe3d6;   /* lino — fondos alternos */
+  --sand:    #d6c8b2;   /* arena — bordes, detalles */
+  --oak:     #a8835b;   /* roble — acento cálido */
+  --stone:   #857b6f;   /* piedra — texto secundario */
+  --ink:     #2e2a25;   /* tinta sumi — texto principal */
+  --seal:    #9e4a35;   /* sello hanko — acento puntual, usar poco */
+
+  /* Tipografía */
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", Georgia, serif;
+  --sans:  "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  /* Ritmo */
+  --gutter: clamp(1rem, 5vw, 4rem);
+  --section: clamp(5rem, 12vw, 10rem);
+  --max: 1200px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1rem, .95rem + .2vw, 1.125rem);
+  line-height: 1.75;
+  color: var(--ink);
+  background-color: var(--washi);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grano de papel sutil sobre todo el sitio */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: .35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .44 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+em { font-style: italic; }
+strong { font-weight: 500; }
+
+/* ---------- Tipografía compartida ---------- */
+
+.eyebrow {
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--oak);
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
+  line-height: 1.25;
+  letter-spacing: .01em;
+  margin-bottom: 2rem;
+}
+
+.section-head {
+  max-width: var(--max);
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.vertical {
+  writing-mode: vertical-rl;
+  font-family: var(--serif);
+  letter-spacing: .6em;
+  color: var(--stone);
+  opacity: .7;
+  user-select: none;
+}
+
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-block;
+  padding: .95rem 2.2rem;
+  font-size: .78rem;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  transition: background-color .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease);
+}
+
+.btn--solid { background: var(--ink); color: var(--washi); }
+.btn--solid:hover { background: var(--oak); border-color: var(--oak); }
+
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--sand); }
+.btn--ghost:hover { border-color: var(--ink); }
+
+/* ---------- Luz filtrada por cortinas ---------- */
+/* Franjas verticales suaves que "respiran". Usada en Hero y Band. */
+
+.curtain-light {
+  position: absolute;
+  inset: -10% -5%;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 252, 245, 0)    0px,
+      rgba(255, 252, 245, .55)  40px,
+      rgba(255, 252, 245, 0)    90px,
+      rgba(214, 200, 178, .18)  130px,
+      rgba(255, 252, 245, 0)    170px
+    );
+  filter: blur(14px);
+  mask-image: linear-gradient(100deg, transparent 0%, #000 35%, #000 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, #000 35%, #000 70%, transparent 100%);
+  animation: sway 18s ease-in-out infinite alternate;
+}
+
+@keyframes sway {
+  from { transform: translateX(-2%) skewX(-4deg); opacity: .8; }
+  to   { transform: translateX(2%)  skewX(-1deg); opacity: 1; }
+}
+
+/* ---------- Revelado al scrollear ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}

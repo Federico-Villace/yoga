@@ -1,0 +1,58 @@
+---
+import { schedule } from "../data/site";
+---
+
+<section class="schedule" id="horarios">
+  <header class="section-head">
+    <p class="eyebrow reveal">Horarios</p>
+    <h2 class="section-title reveal">La semana</h2>
+  </header>
+
+  <ul class="timetable reveal">
+    {schedule.map((s) => (
+      <li>
+        <span class="day">{s.day}</span>
+        <span class="dots"></span>
+        <span class="time">{s.time} — {s.name}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="schedule__note reveal">Clases privadas: horario a coordinar.</p>
+</section>
+
+<style>
+  .schedule {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: var(--section) var(--gutter);
+  }
+
+  .timetable { list-style: none; }
+  .timetable li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .timetable li:first-child { border-top: 1px solid var(--sand); }
+
+  .day { font-family: var(--serif); font-size: 1.2rem; min-width: 7rem; }
+  .dots { flex: 1; border-bottom: 1px dotted var(--sand); transform: translateY(-.3rem); }
+  .time { color: var(--stone); text-align: right; }
+
+  .schedule__note {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: .85rem;
+    letter-spacing: .1em;
+    color: var(--stone);
+  }
+
+  @media (max-width: 720px) {
+    .timetable li { flex-wrap: wrap; gap: .25rem; }
+    .dots { display: none; }
+    .day { min-width: 0; width: 100%; }
+    .time { text-align: left; }
+  }
+</style>

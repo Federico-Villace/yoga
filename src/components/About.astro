@@ -1,0 +1,124 @@
+---
+import { facts } from "../data/site";
+---
+
+<section class="about" id="sobre-mi">
+  <div class="about__media reveal">
+    <!-- Placeholder: reemplazar por <Image /> de astro:assets cuando haya foto -->
+    <div class="frame">
+      <span class="frame__label">foto · agustina</span>
+    </div>
+    <div class="seal" aria-hidden="true">息</div>
+  </div>
+
+  <div class="about__text">
+    <p class="eyebrow reveal">Sobre mí</p>
+    <h2 class="section-title reveal">Hola, soy Agustina.</h2>
+    <p class="reveal">
+      Soy profesora de Hatha Yoga. Mi práctica nace de la búsqueda de calma en medio
+      del ruido cotidiano, y hoy la comparto con quienes quieran encontrar un momento
+      propio para respirar y moverse con amabilidad.
+    </p>
+    <p class="reveal">
+      Mis clases combinan <strong>asanas</strong>, <strong>pranayama</strong> y
+      <strong>meditación</strong>, adaptadas a cada cuerpo y a cada momento. No hace
+      falta experiencia previa: solo ganas de estar presente.
+    </p>
+    <ul class="facts reveal">
+      {facts.map((f) => <li><span>{f.label}</span>{f.value}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: center;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: var(--section) var(--gutter);
+  }
+
+  .about__media { position: relative; }
+
+  /* Marco placeholder: evoca madera + lino mientras no hay foto */
+  .frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.25rem;
+    background:
+      linear-gradient(160deg, rgba(255, 252, 245, .6) 0%, transparent 45%),
+      repeating-linear-gradient(90deg, #d9cbb5 0 2px, #d3c4ac 2px 7px, #dccfba 7px 11px),
+      var(--sand);
+    overflow: hidden;
+  }
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 12px var(--washi), inset 0 0 0 13px var(--sand);
+  }
+
+  .frame__label {
+    position: relative;
+    z-index: 1;
+    margin: 1.25rem;
+    font-size: .7rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* Sello hanko */
+  .seal {
+    position: absolute;
+    right: -1rem;
+    bottom: 2.5rem;
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    color: var(--washi);
+    background: var(--seal);
+    border-radius: 6px;
+    transform: rotate(-4deg);
+    box-shadow: 0 6px 20px rgba(158, 74, 53, .2);
+  }
+
+  .about__text p { margin-bottom: 1.5rem; color: #4a443d; }
+
+  .facts {
+    list-style: none;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--sand);
+  }
+  .facts li {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .facts span {
+    font-size: .72rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--oak);
+    padding-top: .2rem;
+  }
+
+  @media (max-width: 900px) {
+    .about { grid-template-columns: 1fr; }
+    .about__media { max-width: 26rem; }
+  }
+
+  @media (max-width: 720px) {
+    .facts li { grid-template-columns: 1fr; gap: .25rem; }
+    .seal { right: .5rem; }
+  }
+</style>

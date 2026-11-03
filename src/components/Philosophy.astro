@@ -1,0 +1,49 @@
+<section class="philosophy" id="filosofia">
+  <div class="philosophy__kanji reveal" aria-hidden="true">間</div>
+  <div class="philosophy__text">
+    <p class="eyebrow reveal">Ma · el espacio entre</p>
+    <blockquote class="reveal">
+      “El yoga no es tocar tus pies. Es lo que aprendés en el camino hacia ellos.”
+    </blockquote>
+    <p class="reveal">
+      En la tradición japonesa, <em>ma</em> es la pausa que da sentido a todo lo demás.
+      Así entiendo la práctica: no como una exigencia más, sino como ese espacio
+      entre una respiración y la siguiente, donde todo se acomoda.
+    </p>
+  </div>
+</section>
+
+<style>
+  .philosophy {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(2rem, 8vw, 8rem);
+    align-items: center;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: var(--section) var(--gutter);
+  }
+
+  .philosophy__kanji {
+    font-family: var(--serif);
+    font-size: clamp(8rem, 18vw, 16rem);
+    line-height: 1;
+    color: var(--sand);
+  }
+
+  .philosophy__text { max-width: 36rem; }
+
+  blockquote {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+
+  .philosophy__text p:last-child { color: var(--stone); }
+
+  @media (max-width: 900px) {
+    .philosophy { grid-template-columns: 1fr; }
+    .philosophy__kanji { font-size: 7rem; }
+  }
+</style>

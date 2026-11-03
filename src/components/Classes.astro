@@ -1,0 +1,79 @@
+---
+import { classes } from "../data/site";
+---
+
+<section class="classes" id="clases">
+  <header class="section-head">
+    <p class="eyebrow reveal">Clases</p>
+    <h2 class="section-title reveal">Formas de practicar</h2>
+  </header>
+
+  <div class="cards">
+    {classes.map((c) => (
+      <article class="card reveal">
+        <span class="card__num" aria-hidden="true">{c.num}</span>
+        <h3>{c.title}</h3>
+        <p>{c.text}</p>
+        <span class="card__meta">{c.meta}</span>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .classes {
+    background: var(--linen);
+    padding: var(--section) var(--gutter);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+
+  .card {
+    position: relative;
+    padding: 3rem 2.25rem 2.5rem;
+    background: var(--washi);
+    border: 1px solid rgba(214, 200, 178, .6);
+    transition: transform .7s var(--ease), box-shadow .7s var(--ease), opacity 1.2s var(--ease);
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -24px rgba(46, 42, 37, .18);
+  }
+
+  .card__num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--oak);
+    margin-bottom: 2rem;
+  }
+
+  .card h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .card p { color: var(--stone); margin-bottom: 2rem; }
+
+  .card__meta {
+    display: block;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--sand);
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: 1fr; max-width: 32rem; }
+  }
+</style>
